@@ -1,5 +1,5 @@
 ## EdgeMatcher3D
-Teaching shape of a ”template part” in heightmap and match identical objects with full rotation
+Teaching shape of a "template part" in heightmap and match identical objects with full rotation
 ### Description
 This sample is using an edge-based shape locator for recognition of edge points
 above an edge strength threshold.
