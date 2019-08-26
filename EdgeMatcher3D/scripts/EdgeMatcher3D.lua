@@ -30,7 +30,7 @@
 
 -- Create viewer
 local v = View.create()
-v:setID('viewer3D')
+
 
 local red = View.ShapeDecoration.create()
 red:setLineColor(255, 0, 0)
