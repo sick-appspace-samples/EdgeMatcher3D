@@ -31,6 +31,7 @@
 -- Create viewer
 local v = View.create()
 
+local DELAY = 2000 -- ms between each type for demonstration purpose
 
 local red = View.ShapeDecoration.create()
 red:setLineColor(255, 0, 0)
@@ -81,7 +82,7 @@ local function handleOnStarted()
   end
   v:addShape(inspectionRegion, blue, nil, heightmapID)
   v:present()
-  Script.sleep(2000) -- for demonstration purpose only
+  Script.sleep(DELAY) -- for demonstration purpose only
 
   -- Match
   local poses,
