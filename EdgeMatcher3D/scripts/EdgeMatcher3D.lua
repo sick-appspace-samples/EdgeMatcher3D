@@ -29,7 +29,7 @@
 ------------------------------------------------------------------------------]]
 
 -- Create viewer
-local v = View.create()
+local v = View.create('viewer3D1')
 
 local DELAY = 2000 -- ms between each type for demonstration purpose
 
