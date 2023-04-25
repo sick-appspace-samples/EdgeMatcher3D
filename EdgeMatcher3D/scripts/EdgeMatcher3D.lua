@@ -1,17 +1,14 @@
-
 -- Create viewer
-local v = View.create('viewer3D1')
+local v = View.create()
 
 local DELAY = 2000 -- ms between each type for demonstration purpose
 
-local red = View.ShapeDecoration.create()
-red:setLineColor(255, 0, 0)
+local red = View.ShapeDecoration.create():setLineColor(255, 0, 0)
 
-local blue = View.ShapeDecoration.create()
-blue:setLineColor(0, 0, 255)
-blue:setLineWidth(4)
+local blue = View.ShapeDecoration.create():setLineColor(0, 0, 255):setLineWidth(4)
 
---@handleOnStarted()
+local imgDecoration = View.ImageDecoration.create():setRange(103, 145)
+
 local function handleOnStarted()
   -- Load and prepare test images
   local teachImages = Object.load('resources/teachImages.json')
@@ -46,28 +43,23 @@ local function handleOnStarted()
 
   -- Show teach geometry
   v:clear()
-  local heightmapID = v:addHeightmap({teachHM, teachI}, {}, {'Reflectance'})
-  v:addShape(teachBox, nil, nil, heightmapID)
-  for _, contour in ipairs(teachModelContours) do
-    v:addShape(contour, red, nil, heightmapID)
-  end
-  v:addShape(inspectionRegion, blue, nil, heightmapID)
+  v:addHeightmap({teachHM, teachI}, {imgDecoration}, {'Reflectance'})
+  v:addShape(teachBox)
+  v:addShape(teachModelContours, red)
+  v:addShape(inspectionRegion, blue)
   v:present()
   Script.sleep(DELAY) -- for demonstration purpose only
 
   -- Match
-  local poses,
-    _ = matcher:match(matchHM)
+  local poses, _ = matcher:match(matchHM)
   local matchModelContours = Shape3D.transform(modelContours, poses[1])
 
   -- Display results
   v:clear()
   fixture:transform(poses[1])
-  heightmapID = v:addHeightmap({matchHM, matchI}, {}, {'Reflectance'})
-  v:addShape(fixture:getShape('inspectionRegion'), blue, nil, heightmapID)
-  for _, contour in ipairs(matchModelContours) do
-    v:addShape(contour, red, nil, heightmapID)
-  end
+  v:addHeightmap({matchHM, matchI}, {imgDecoration}, {'Reflectance'})
+  v:addShape(fixture:getShape('inspectionRegion'), blue)
+  v:addShape(matchModelContours, red)
   v:present()
   print('App finished.')
 end
